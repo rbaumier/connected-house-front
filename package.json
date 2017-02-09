@@ -1,0 +1,20 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "### Usage ``` bower install open index.html ```",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.14.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "",
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": "6"
+  },
+  "keywords": [],
+  "author": "@rbaumier <baumier.romain@gmail.com>",
+  "license": "ISC"
+}

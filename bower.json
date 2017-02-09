@@ -1,0 +1,24 @@
+{
+  "name": "blackmagic",
+  "version": "1.0.0",
+  "authors": [
+    "RBaumier"
+  ],
+  "description": "",
+  "main": "public/app/app.js",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/components/"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "angular": "^1.5.3",
+    "angular-bootstrap": "^1.2.5",
+    "lodash": "^4.6.1",
+    "es6-promise": "^4.0.5"
+  }
+}

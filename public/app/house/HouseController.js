@@ -35,8 +35,8 @@ app.controller('HouseController', function($scope) {
   $scope.update();
   chart.flow({
       columns: [
-        ['x', ...temperatures.slice(-5).map(t => new Date(t.date))],
-        ['temperature', ...temperatures.slice(-5).map(t => t.value)]
+        ['x', ...temperatures.slice(-20).map(t => new Date(t.date))],
+        ['temperature', ...temperatures.slice(-20).map(t => t.value)]
       ]
     });
   });

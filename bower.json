@@ -19,6 +19,7 @@
     "angular": "^1.5.3",
     "angular-bootstrap": "^1.2.5",
     "lodash": "^4.6.1",
-    "es6-promise": "^4.0.5"
+    "es6-promise": "^4.0.5",
+    "c3": "^0.4.11"
   }
 }

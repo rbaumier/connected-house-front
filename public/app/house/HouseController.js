@@ -3,6 +3,7 @@
 app.controller('HouseController', function($scope) {
   var socket = {};
   socket = io('http://localhost:3003');
+  $scope.TemperatureWanted = 18;
 
   // log socket.io events
   ['error', 'connect_failed', 'reconnect_failed', 'connect', 'connect', 'reconnecting', 'reconnected'].forEach(function(socketIOEvent) {
@@ -29,8 +30,10 @@ app.controller('HouseController', function($scope) {
     }
   });
 
-  socket.emit('temperature:getAll', function(err, temperatures) {
-    chart.flow({
+  socket.emit('temperature:getAll', (err, temperatures) => {
+    $scope.actualTemperature = _.last(temperatures).value;
+  $scope.update();
+  chart.flow({
       columns: [
         ['x', ...temperatures.slice(-5).map(t => new Date(t.date))],
         ['temperature', ...temperatures.slice(-5).map(t => t.value)]
@@ -39,6 +42,8 @@ app.controller('HouseController', function($scope) {
   });
 
   socket.on('temperature:sensor:new', temperature => {
+    $scope.actualTemperature = temperature.value;
+    $scope.update();
     chart.flow({
       columns: [
         ['x', new Date(temperature.date)],
@@ -47,9 +52,29 @@ app.controller('HouseController', function($scope) {
     });
   });
 
-  // socket.emit('temperature:limit:new', 12, (err) => {
-  //   if(!err) {
-  //     console.log('OK');
-  //   }
-  // });
+  $scope.riseTemperature = function(temperature) {
+    $scope.TemperatureWanted = temperature + 0.5;
+    socket.emit('temperature:limit:new', $scope.TemperatureWanted, function(err) {
+      if(!err)
+    {
+      console.log('OK');
+  }
+    });
+
+  };
+
+
+  $scope.lowTemperature = function(temperature) {
+    $scope.TemperatureWanted = temperature - 0.5;
+    socket.emit('temperature:limit:new', $scope.TemperatureWanted, function(err) {
+        if(!err)
+    {
+        console.log('OK');
+    }});
+  };
+
+    $scope.update = function(){
+      $scope.$apply();
+    };
+
 });

@@ -18,6 +18,10 @@
 
 <body>
   <div class="container" ng-controller="HouseController">
+    <p>Température souhaitée : {{ TemperatureWanted }}</p>
+    <p>Température actuelle : {{ actualTemperature}} </p>
+    <button class="glyphicon glyphicon-plus" ng-click="riseTemperature(TemperatureWanted)"></button>
+    <button class="glyphicon glyphicon-minus" ng-click="lowTemperature(TemperatureWanted)"></button>
   </div>
   <div id="chart"></div>
 

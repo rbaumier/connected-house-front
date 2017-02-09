@@ -12,36 +12,36 @@ app.controller('HouseController', function($scope) {
   });
 
   var chart = c3.generate({
-    bindto: '#chart',
     data: {
+      x: 'x',
       columns: [
+        ['x'],
         ['temperature']
-      ],
-      axes: {
-        data2: 'y2' // ADD
-      }
+      ]
     },
     axis: {
-      y2: {
-        show: true // ADD
-      },
-
+      x: {
+        type: 'timeseries',
+        tick: {
+          format: '%Y-%m-%d\n%H:%M:%S'
+        }
+      }
     }
   });
 
   socket.emit('temperature:getAll', function(err, temperatures) {
     chart.flow({
       columns: [
-        // ['x', ...temperatures.slice(-5).map(t => t.date)],
+        ['x', ...temperatures.slice(-5).map(t => new Date(t.date))],
         ['temperature', ...temperatures.slice(-5).map(t => t.value)]
       ]
     });
   });
 
-
   socket.on('temperature:sensor:new', temperature => {
     chart.flow({
       columns: [
+        ['x', new Date(temperature.date)],
         ['temperature', temperature.value]
       ]
     });

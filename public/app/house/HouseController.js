@@ -11,8 +11,40 @@ app.controller('HouseController', function($scope) {
     });
   });
 
+  var chart = c3.generate({
+    bindto: '#chart',
+    data: {
+      columns: [
+        ['temperature']
+      ],
+      axes: {
+        data2: 'y2' // ADD
+      }
+    },
+    axis: {
+      y2: {
+        show: true // ADD
+      },
+
+    }
+  });
+
   socket.emit('temperature:getAll', function(err, temperatures) {
-    console.log("temperature:", temperatures);
+    chart.flow({
+      columns: [
+        // ['x', ...temperatures.slice(-5).map(t => t.date)],
+        ['temperature', ...temperatures.slice(-5).map(t => t.value)]
+      ]
+    });
+  });
+
+
+  socket.on('temperature:sensor:new', temperature => {
+    chart.flow({
+      columns: [
+        ['temperature', temperature.value]
+      ]
+    });
   });
 
   // socket.emit('temperature:limit:new', 12, (err) => {

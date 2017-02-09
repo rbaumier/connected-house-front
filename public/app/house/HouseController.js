@@ -11,7 +11,13 @@ app.controller('HouseController', function($scope) {
     });
   });
 
-  socket.emit('temperature:get', function(data) {
-    console.log("data:", data);
+  socket.emit('temperature:getAll', function(err, temperatures) {
+    console.log("temperature:", temperatures);
   });
+
+  // socket.emit('temperature:limit:new', 12, (err) => {
+  //   if(!err) {
+  //     console.log('OK');
+  //   }
+  // });
 });

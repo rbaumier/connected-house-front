@@ -15,6 +15,7 @@ app.controller('HouseController', function($scope) {
   var chart = c3.generate({
     data: {
       x: 'x',
+      seuil: 'seuil',
       columns: [
         ['x'],
         ['temperature']
@@ -36,7 +37,8 @@ app.controller('HouseController', function($scope) {
     chart.flow({
       columns: [
         ['x', ...temperatures.slice(-20).map(t => new Date(t.date))],
-        ['temperature', ...temperatures.slice(-20).map(t => t.value)]
+        ['temperature', ...temperatures.slice(-20).map(t => t.value)],
+        ['seuil', ...temperatures.slice(-20).map(t => 30)]
       ]
     });
   });
@@ -47,7 +49,8 @@ app.controller('HouseController', function($scope) {
     chart.flow({
       columns: [
         ['x', new Date(temperature.date)],
-        ['temperature', temperature.value]
+        ['temperature', temperature.value],
+        ['seuil', 30]
       ]
     });
   });

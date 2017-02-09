@@ -32,8 +32,8 @@ app.controller('HouseController', function($scope) {
 
   socket.emit('temperature:getAll', (err, temperatures) => {
     $scope.actualTemperature = _.last(temperatures).value;
-  $scope.update();
-  chart.flow({
+    $scope.update();
+    chart.flow({
       columns: [
         ['x', ...temperatures.slice(-20).map(t => new Date(t.date))],
         ['temperature', ...temperatures.slice(-20).map(t => t.value)]
@@ -52,29 +52,30 @@ app.controller('HouseController', function($scope) {
     });
   });
 
+  socket.on('temperature:sensor:alert', temperature => {
+    console.log('ALERTE');
+  });
+
   $scope.riseTemperature = function(temperature) {
     $scope.TemperatureWanted = temperature + 0.5;
     socket.emit('temperature:limit:new', $scope.TemperatureWanted, function(err) {
-      if(!err)
-    {
-      console.log('OK');
-  }
+      if (!err) {
+        console.log('OK');
+      }
     });
 
   };
 
-
   $scope.lowTemperature = function(temperature) {
     $scope.TemperatureWanted = temperature - 0.5;
     socket.emit('temperature:limit:new', $scope.TemperatureWanted, function(err) {
-        if(!err)
-    {
+      if (!err) {
         console.log('OK');
-    }});
+      }
+    });
   };
 
-    $scope.update = function(){
-      $scope.$apply();
-    };
-
+  $scope.update = function() {
+    $scope.$apply();
+  };
 });
